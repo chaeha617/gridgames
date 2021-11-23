@@ -15,7 +15,7 @@ int Cx, Cy; //클릭한 위치 나타내는 변수
 int glife; //게임 생명
 
 
-void initialize();
+void B_initialize();
 void display();
 
 
@@ -28,7 +28,7 @@ void ClickBoom();
 void CheckB();
 
 // 게임 초기화 설정
-void initialize() {
+void B_initialize() {
     glife = 1;
     for (int i = 0; i < Bx; i++) {
         for (int j = 0; j < By; j++) {
@@ -125,14 +125,7 @@ void Boomgame() {
 
     Bx = Boomlv[Blv][0];
     By = Boomlv[Blv][1];
-    initialize();
-    for (int i = 0; i < Bx; i++) {
-        for (int j = 0; j < By; j++) {
-            printf("%3c", Boom[i][j] + 48);
-        }
-        printf("\n");
-    }
-    display();
+    B_initialize();
 
     printf("게임을 시작합니다.\n");
 
@@ -168,7 +161,7 @@ void Boomgame() {
 void ClickBoom() {
     printf("행과 열을 입력해주세요.\n예시)10 8\n입력가능 행 : 1 ~ %d, 입력가능 열: 1 ~ %d\n행 열:", Bx, By);
     scanf_s("%d %d", &Cx, &Cy);
-    while (Cx > Bx || Cx < 1 || Cx > By || Cy < 1)
+    while (Cx > Bx || Cx < 1 || Cy > By || Cy < 1)
     {
         printf("행과 열을 다시 입력해주세요.\n예시)10 8\n입력가능 행 : 1 ~ %d, 입력가능 열: 1 ~ %d\n행 열:", Bx, By);
         scanf_s("%d %d", &Cx, &Cy);
@@ -212,7 +205,37 @@ int CheckBoom() {
 
 int main(void)
 {
-    Boomgame();
+    printf("〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓\n");
+    printf("□□□■■■■■■□□■□□□□□□□□□□□■□■□□□■■□□■□□■■■■■■□□□\n");
+    printf("□□□■□□□□■□□■■■■■■□□■■■□■□■□□■□□■□■□□□□■■□□□□□\n");
+    printf("□□□■□□□□■□□□□□□□□□□□□■□■□■□□□■■□□■□□□■□□■□□□□\n");
+    printf("□□□■□□□□■□□■■■■■■□□□□■■■□■□□□□□□□□□□□■□□■□□□□\n");
+    printf("□□□■■■■■■□□□□■□□□□□□□■□■□■□□■■■■■■□□■□□□□■□□□\n");
+    printf("□□□□□■□□□□□■□□□□□□□□□■□■□■□□■□□□□■□□□□□□□□□□□\n");
+    printf("□□□■■■■■■□□■■■■■■□□□□□□■□■□□■■■■■■□□■■■■■■□□□\n");
+    printf("〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓\n");
+    printf("모눈게임즈\n");
+    printf("하고 싶은 게임을 선택하세요.\n");
+    printf("1.지뢰찾기\n");
+    printf("2.정렬게임\n");
+    printf("(숫자만 작성해주세요 예시. 1)\n");
+    int G_menu = 0;
+    scanf_s("%d", &G_menu);
+    while (G_menu != 1 && G_menu != 2 ) {
+        scanf_s("%d", &G_menu);
+        printf("숫자 1또는 2만 입력해주세요.");
+    }
+    if (G_menu == 1) {
+        printf("지뢰찾기를 선택하셨습니다.");
+        Sleep(3000);
+        system("cls");
+        Boomgame();
+    }
+    else if (G_menu == 2) {
+        printf("정렬게임을 선택하셨습니다.");
+    }
+
+        
 
     return 0;
 }
