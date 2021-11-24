@@ -212,7 +212,6 @@ void Boomgame() {
 //정렬게임 관련 개체 전역변수 선언
 int Sort_Field[14][4];
 int Sort_Field_count[14];
-int Sort_End[14];
 int Sort_Level[3] = { 8,11,14 };
 int Slv,S_Check;
 
@@ -221,6 +220,8 @@ void S_Rand();
 void S_Display();
 void S_printball(int* Snum);
 void S_Change();
+void S_Count_Alpa();
+void S_Endcheck();
 void Sortgame();
 
 void S_initialize() {
@@ -296,7 +297,19 @@ void S_printball(int* Snum) {
     }
 }
 
+void S_Count_Alpa() {
+    for (int i = 0; i < Sort_Level[Slv]; i++)  {
+        Sort_Field_count[i] = 0;
+        for (int j = 0; j < 4; j++) {
+            if (Sort_Field[i][j] != 0) {
+                Sort_Field_count[i] += 1;
+            }
+        }
+    }
+}
+
 void S_Display() {
+    system("cls");
     for (int i = 0; i < Sort_Level[Slv]; i++)
     {
         printf("%2d |", i + 1);
@@ -309,6 +322,46 @@ void S_Display() {
 }
 
 void S_Change() {
+    int Cnum, Mnum; // Cnum은 배열을 공을 꺼낼 배열, Mnum은 공을 넣을 배열
+    printf("가장 오른쪽 공을 꺼낼 배열의 숫자와 꺼낸 공을 넣을 배열을 입력해주세요.\n");
+    printf("공을 넣을 배열이 꽉차거나, 공을 넣을 가장 배열의 가장 오른쪽 공이 없거나, 옮기는 공과 같지 않으면 옮길 수 없습니다.\n");
+    printf("예시) 5번 배열의 가장 오른쪽 공을 3번 배열에 옮길 경우 : 5 3\n");
+    printf("입력가능 숫자 : 1 ~ %d\n", Sort_Level[Slv]);
+    scanf_s("%d %d", &Cnum, &Mnum);
+    while (Cnum > Sort_Level[Slv] || Cnum < 1 || Sort_Field_count[Cnum-1] == 0 || Sort_Field_count[Mnum - 1] == 4 || Cnum == Mnum) { 
+        printf("가장 오른쪽 공을 꺼낼 배열의 숫자와 꺼낸 공을 넣을 배열을 입력해주세요.\n");
+        pprintf("공을 넣을 배열이 꽉차거나, 공을 넣을 가장 배열의 가장 오른쪽 공이 없거나, 옮기는 공과 같지 않으면 옮길 수 없습니다.\n");
+        printf("예시) 5번 배열의 가장 오른쪽 공을 3번 배열에 옮길 경우 : 5 3\n");
+        printf("입력가능 숫자 : 1 ~ %d\n", Sort_Level[Slv]);
+        scanf_s("%d %d", &Cnum, &Mnum);
+    }
+    while ((Sort_Field[Mnum - 1][Sort_Field_count[Mnum - 1]-1] != Sort_Field[Cnum - 1][Sort_Field_count[Cnum - 1] - 1] && Sort_Field_count[Mnum - 1] != 0)) {
+        printf("가장 오른쪽 공을 꺼낼 배열의 숫자와 꺼낸 공을 넣을 배열을 입력해주세요.\n");
+        printf("공을 넣을 배열이 꽉차거나, 공을 넣을 가장 배열의 가장 오른쪽 공이 없거나, 옮기는 공과 같지 않으면 옮길 수 없습니다.\n");
+        printf("예시) 5번 배열의 가장 오른쪽 공을 3번 배열에 옮길 경우 : 5 3\n");
+        printf("입력가능 숫자 : 1 ~ %d\n", Sort_Level[Slv]);
+        scanf_s("%d %d", &Cnum, &Mnum);
+    }
+
+
+    Cnum -= 1;
+    Mnum -= 1;
+    Sort_Field[Mnum][Sort_Field_count[Mnum]] = Sort_Field[Cnum][Sort_Field_count[Cnum]-1];
+    Sort_Field[Cnum][Sort_Field_count[Cnum] - 1] = 0;
+
+}
+
+void S_Endcheck() {
+
+    for (int i = 0; i < Sort_Level[Slv]; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (Sort_Field[i][0] != Sort_Field[i][j]) {
+                return 0;
+            }
+        }
+    }
+    
+    glife -= 1;
 
 }
 
@@ -330,9 +383,13 @@ void Sortgame() {
     while (glife > 0)//게임플레이
     {
         S_Display();
-        
+        S_Count_Alpa();
+        S_Change();
+        S_Endcheck();
     }
-    
+    S_Display();
+
+        printf("게임 클리어! 축하드립니다.");
 
 
 
