@@ -330,7 +330,7 @@ void S_Change() {
     scanf_s("%d %d", &Cnum, &Mnum);
     while (Cnum > Sort_Level[Slv] || Cnum < 1 || Sort_Field_count[Cnum-1] == 0 || Sort_Field_count[Mnum - 1] == 4 || Cnum == Mnum) { 
         printf("가장 오른쪽 공을 꺼낼 배열의 숫자와 꺼낸 공을 넣을 배열을 입력해주세요.\n");
-        pprintf("공을 넣을 배열이 꽉차거나, 공을 넣을 가장 배열의 가장 오른쪽 공이 없거나, 옮기는 공과 같지 않으면 옮길 수 없습니다.\n");
+        printf("공을 넣을 배열이 꽉차거나, 공을 넣을 가장 배열의 가장 오른쪽 공이 없거나, 옮기는 공과 같지 않으면 옮길 수 없습니다.\n");
         printf("예시) 5번 배열의 가장 오른쪽 공을 3번 배열에 옮길 경우 : 5 3\n");
         printf("입력가능 숫자 : 1 ~ %d\n", Sort_Level[Slv]);
         scanf_s("%d %d", &Cnum, &Mnum);
